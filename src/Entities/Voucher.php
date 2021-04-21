@@ -24,9 +24,11 @@ class Voucher extends BaseEntity
     /** @var string */
     protected $endpoint = '/vouchers';
 
-    public function index(string $fiscalYearId): collection
+    public function index(string $fiscalYearId = ''): collection
     {
-        $this->endpoint .= '/' . $fiscalYearId;
+        if($fiscalYearId !== '') {
+            $this->endpoint .= '/' . $fiscalYearId;
+        }
 
         return $this->baseIndex();
     }
