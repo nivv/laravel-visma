@@ -47,6 +47,28 @@ abstract class BaseEntity
         return collect($data);
     }
 
+    protected function basePut($object, $queryParams = []): object
+    {
+        $arr = (array) $object;
+        foreach($arr as $key => $value) {
+            if(!isset($value)) {
+                unset($arr[$key]);
+            }
+        }
+        $options = [];
+        $options['body'] = json_encode( $arr );
+        $options['headers']['Content-Type'] = 'application/json';
+        $options['headers']['Accept'] = 'application/json';
+        $request = $this->client->getProvider()->getAuthenticatedRequest(
+            'PUT',
+            $this->buildUri(1, $queryParams, true),
+            $this->client->getToken(),
+            $options
+        );
+
+        return json_decode($this->client->getProvider()->getResponse($request)->getBody()->getContents());
+    }
+
     protected function basePost($object, $queryParams = []): object
     {
         $arr = (array) $object;
