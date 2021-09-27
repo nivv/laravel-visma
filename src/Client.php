@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Webparking\LaravelVisma;
 
+use GuzzleHttp\Client as GuzzleHttpClient;
 use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 
@@ -30,6 +31,8 @@ class Client
             'urlAuthorize' => $this->getUrlAuthorize(),
             'urlAccessToken' => $this->getUrlAccessToken(),
             'urlResourceOwnerDetails' => '',
+        ], [
+            'httpClient' => new GuzzleHttpClient(['verify' => false])
         ]);
 
         return $this;
