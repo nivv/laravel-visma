@@ -115,9 +115,9 @@ abstract class BaseEntity
     {
         $url = $this->getUrlAPI() . $this->getEndpoint();
         if($postUrl) {
-            $url .= '?' . build_query($extraParams, false);
+            $url .= '?' . http_build_query($extraParams, '', '&', 0);
         } else {
-            $url .= '?' . build_query(array_merge(['$page' => $currentPage, '$pagesize' => 100], $extraParams), false);
+            $url .= '?' . http_build_query(array_merge(['$page' => $currentPage, '$pagesize' => 100], $extraParams), '', '&', 0);
         }
 
         return $url;
